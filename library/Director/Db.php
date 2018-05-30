@@ -2,6 +2,7 @@
 
 namespace Icinga\Module\Director;
 
+use Icinga\Application\Config;
 use Icinga\Module\Director\Data\Db\DbConnection;
 use Icinga\Module\Director\Objects\IcingaEndpoint;
 use Icinga\Module\Director\Objects\IcingaObject;
@@ -671,5 +672,12 @@ class Db extends DbConnection
         )->order('l.start_time DESC');
 
         return $db->fetchPairs($query);
+    }
+
+    public static function newConfiguredInstance()
+    {
+        return static::fromResourceName(
+            Config::module('director')->get('db', 'resource')
+        );
     }
 }
