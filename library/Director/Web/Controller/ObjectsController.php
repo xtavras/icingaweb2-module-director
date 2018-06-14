@@ -108,7 +108,7 @@ abstract class ObjectsController extends ActionController
             ->addObjectsTabs()
             ->setAutorefreshInterval(10)
             ->addTitle($this->translate(ucfirst($this->getPluralType())))
-            ->actions(new ObjectsActionBar($type, $this->url()));
+            ->actions(new ObjectsActionBar($this->getBaseObjectUrl(), $this->url()));
 
         if ($type === 'command' && $this->params->get('type') === 'external_object') {
             $this->tabs()->activate('external');
@@ -409,6 +409,11 @@ abstract class ObjectsController extends ActionController
         } else {
             return $type;
         }
+    }
+
+    protected function getBaseObjectUrl()
+    {
+        return $this->getType();
     }
 
     /**
