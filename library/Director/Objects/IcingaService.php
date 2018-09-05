@@ -372,11 +372,18 @@ class IcingaService extends IcingaObject
      */
     protected function renderSuffix()
     {
+        $suffix = '';
         if ($this->isApplyRule() || $this->usesVarOverrides()) {
-            return $this->renderImportHostVarOverrides() . parent::renderSuffix();
-        } else {
-            return parent::renderSuffix();
+            $zone = $this->getRenderingZone();
+            if ($zone !== 'director-global') {
+                $suffix .= c::renderKeyValue('zone', c::renderString($zone));
+            }
         }
+        if ($this->isApplyRule() || $this->usesVarOverrides()) {
+            $suffix .= $this->renderImportHostVarOverrides();
+        }
+
+        return $suffix . parent::renderSuffix();
     }
 
     /**
