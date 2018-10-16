@@ -177,6 +177,9 @@ abstract class ObjectApplyMatches
         }
 
         $filter->setExpression(json_decode($filter->getExpression()));
+        if ($filter->getExpression() === true) {
+            $filter->setExpression('*');
+        }
     }
 
     protected static function columnIsJson(FilterExpression $filter)
